@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+    [SerializeField]
+    PlayerInventory inventory;
+
     Rigidbody rgb;
 
     [SerializeField]
@@ -15,8 +18,13 @@ public class PlayerController : MonoBehaviour
     [Range(0.0f, 1000.0f)]
     float cartDrag = 0.98f;
 
+
+    [SerializeField]
+    ParticleSystem driftFX;
+
     [SerializeField]
     LayerMask whatIsGround;
+
 
     // Start is called before the first frame update
     void Start()
@@ -45,20 +53,43 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * 20);
         }
 
+        if (dir.x !=0 && dir.z != 0)
+        {
+            if (driftFX.isStopped)
+                driftFX.Play();
+        }
+        else
+        {
+            if (driftFX.isPlaying)
+                driftFX.Stop();
+
+        }
+
         // Handle Raycasting
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(-Vector3.up), out hit, 1, whatIsGround))
         {
-            rgb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            rgb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         }
         else
         {
             rgb.constraints = RigidbodyConstraints.FreezeRotationZ;
 
         }
+    }
 
-
-
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<FoodItemPickup>())
+        {
+            var foodItemPickup = other.GetComponent<FoodItemPickup>();
+            foodItemPickup.OnPickup();
+            inventory.AddItem(foodItemPickup);
+        }
+        if (other.GetComponent<ItemDropOffPoint>())
+        {
+            var itemDropOffPoint = other.GetComponent<ItemDropOffPoint>();
+            itemDropOffPoint.CheckForItems(inventory);
+        }
     }
 }
