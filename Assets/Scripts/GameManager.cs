@@ -18,6 +18,16 @@ public class GameManager : MonoBehaviour
 
     public GameObject results;
 
+    [SerializeField]
+    public TypingGame typingGame;
+
+    public enum GameStates
+    {
+        START, OVERWORLD, TYPING, WIN, LOSE
+    }
+
+    public GameStates gameState;
+
 
     // Start is called before the first frame update
     void Start()
@@ -77,5 +87,12 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         //launcher.SetControl(true);
         timerIsRunning = true;
+    }
+
+    public void StartTypingBattle(Customer customer)
+    {
+        gameState = GameStates.TYPING;
+        // Pass all the attributes to the Typing Battle UI to start things up
+        typingGame.StartNewGame(customer);
     }
 }

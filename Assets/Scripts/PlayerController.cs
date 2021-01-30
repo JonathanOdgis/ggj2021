@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     PlayerInventory inventory;
 
+    public GameManager gameManager;
+
     Rigidbody rgb;
 
     [SerializeField]
@@ -25,16 +27,31 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     LayerMask whatIsGround;
 
+    SpriteRenderer playerSprite;
+
+    [SerializeField]
+    Sprite forwardSprite;
+
+    [SerializeField]
+    Sprite backSprite;
+
 
     // Start is called before the first frame update
     void Start()
     {
         rgb = GetComponent<Rigidbody>();
+        playerSprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (gameManager.gameState == GameManager.GameStates.TYPING)
+        {
+            rgb.velocity = Vector3.zero;
+            return;
+        }
+
         // Handle Movement Speed
         var dir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         dir = dir.normalized * Time.deltaTime;
@@ -51,6 +68,16 @@ public class PlayerController : MonoBehaviour
 
             //rotate us over time according to speed until we are in the required rotation
             transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * 20);
+        }
+
+        float angle = 90;
+        if (Mathf.Abs(Vector3.Angle(transform.forward, Camera.main.transform.position - transform.position)) < angle)
+        {
+            playerSprite.sprite = forwardSprite;
+        }
+        else
+        {
+            playerSprite.sprite = backSprite;
         }
 
         if (dir.x !=0 && dir.z != 0)
@@ -78,6 +105,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<FoodItemPickup>())
@@ -90,6 +118,12 @@ public class PlayerController : MonoBehaviour
         {
             var itemDropOffPoint = other.GetComponent<ItemDropOffPoint>();
             itemDropOffPoint.CheckForItems(inventory);
+        }
+        if (other.GetComponent<EnemyEncounterCharacter>())
+        {
+            var enemy = other.GetComponent<EnemyEncounterCharacter>();
+            enemy.OnPlayerTrigger();
+            gameManager.StartTypingBattle(enemy.customer);
         }
     }
 }

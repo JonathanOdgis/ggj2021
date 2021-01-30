@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b082625a2a7eddf4faa8065977dd6d42, type: 3}
+  m_Name: Jim Himbledupply Customer
+  m_EditorClassIdentifier: 
+  name: Jim Himbledupley (Joined Spacebook in June 2020)
+  normalSprite: {fileID: 21300000, guid: 55c727e1e9c1f7e499177672b0f80994, type: 3}
+  angrySprite: {fileID: 0}
+  dialogues:
+  - You millenials always checking your phones. I bet you can't even replace a flat
+    tire!
+  - Yea. I was waitin for you to finally ask that. Where can I find the hot dogs?
+    I just wanna grill gosh darnit.
+  responses:
+  - Sir. Do you actually need help with something?
+  - Over in Aisle 4.
+  mistakeStatement: Come on son! Spit it out! I don't have all day!
+  victoryStatement: Thanks son. Maybe you are useful for something after all. He
+    he.
+  loseStatement: Yall keep textin on your phones but yall got no grit. No communication
+    skill.
