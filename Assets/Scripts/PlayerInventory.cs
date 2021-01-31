@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
+    [SerializeField]
+    GameManager gameManager;
+
     public Transform[] slots;
     public FoodItemPickup[] foodSlots;
     bool[] isSlotUsed;
@@ -47,6 +50,7 @@ public class PlayerInventory : MonoBehaviour
             if (isSlotUsed[i] && foodItemPickup == foodSlots[i]) {
                 isSlotUsed[i] = false;
                 foodSlots[i] = null;
+                gameManager.UpdateScore(1);
                 var copyColor = slots[i].GetComponentsInChildren<Image>()[1].color;
                 copyColor.a = 0;
                 slots[i].GetComponentsInChildren<Image>()[1].color = copyColor;

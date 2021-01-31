@@ -7,8 +7,10 @@ public class GameManager : MonoBehaviour
 {
 
     public float timeRemaining = 60;
-    public static float score = 0;
+    public float score = 0;
     public bool timerIsRunning = false;
+
+    public int requiredScore = 8;
 
     public TMP_Text timeText;
 
@@ -58,6 +60,11 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        if (score == requiredScore)
+        {
+            gameState = GameStates.WIN;
+        }
+
         DisplayTime(timeRemaining);
         DisplayScore(score);
     }
@@ -72,13 +79,11 @@ public class GameManager : MonoBehaviour
 
     void DisplayScore(float score)
     {
-        //scoreText.text = "SCORE " + score;
+        scoreText.text = "Returns: " + score + "/" + requiredScore;
     }
 
-    public static void UpdateScore(float points)
+    public void UpdateScore(float points)
     {
-
-        Debug.Log("Points " + points);
         score += points;
     }
 
@@ -95,4 +100,9 @@ public class GameManager : MonoBehaviour
         // Pass all the attributes to the Typing Battle UI to start things up
         typingGame.StartNewGame(customer);
     }
+
+    public void OnTypingBattleFinished()
+    {
+        gameState = GameStates.OVERWORLD;
+    } 
 }
