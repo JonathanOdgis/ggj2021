@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (gameManager.gameState == GameManager.GameStates.TYPING)
+        if (gameManager && gameManager.gameState != GameManager.GameStates.OVERWORLD)
         {
             rgb.velocity = Vector3.zero;
             return;
@@ -105,7 +105,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<FoodItemPickup>())
@@ -121,6 +120,7 @@ public class PlayerController : MonoBehaviour
         }
         if (other.GetComponent<EnemyEncounterCharacter>())
         {
+            Debug.Log("Got enemy spawn trigger");
             var enemy = other.GetComponent<EnemyEncounterCharacter>();
             enemy.OnPlayerTrigger();
             gameManager.StartTypingBattle(enemy.customer);

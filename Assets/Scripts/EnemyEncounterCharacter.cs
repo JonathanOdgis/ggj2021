@@ -28,7 +28,7 @@ public class EnemyEncounterCharacter : MonoBehaviour
         if (!player)
             return;
 
-        if (gameManager && gameManager.gameState == GameManager.GameStates.TYPING)
+        if (gameManager && gameManager.gameState != GameManager.GameStates.OVERWORLD)
         {
             return;
         }

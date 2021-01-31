@@ -19,6 +19,9 @@ public class TypingGame : MonoBehaviour
     Sprite customerAngrySprite;
 
     [SerializeField]
+    TMP_Text customerName;
+
+    [SerializeField]
     GameObject responsePromptWindow;
 
     [SerializeField]
@@ -39,12 +42,23 @@ public class TypingGame : MonoBehaviour
     [SerializeField]
     TMP_Text customerDialogueText;
 
+    [SerializeField]
+    Animator containerAnim;
+
     public enum ResponseResult
     {
         CORRECT, WRONG, SKIP
     }
 
-    // Start is called before the first frame update
+    public enum Ranks
+    {
+        A_RANK, B_RANK, C_RANK
+    }
+
+    bool allResponsesCorrect = true;
+
+
+    // Start is called before the first frame updated
     void Start()
     {
         container.SetActive(false);
@@ -58,8 +72,6 @@ public class TypingGame : MonoBehaviour
 
         if (!responsePromptWindow.gameObject.activeSelf)
             return;
-
-        
 
         var input = Input.inputString;
 
@@ -98,6 +110,7 @@ public class TypingGame : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Return))
         {
             Debug.Log("Submitting This String: " + stringToSubmit);
+
             if (stringToSubmit == originalResponsePromptString)
             {
                 Debug.Log("Correct");
@@ -129,8 +142,23 @@ public class TypingGame : MonoBehaviour
 
     }
 
+    float gameStartTime;
+    float gameEndTime;
+
     public void StartNewGame(Customer customer)
     {
+        Debug.Log("Starting New Game");
+
+        gameEndTime = 0;
+        gameStartTime = Time.time;
+
+        allResponsesCorrect = true;
+
+        containerAnim.SetBool("isEnd", false);
+        isEnd = false;
+
+        responsePromptWindow.SetActive(false);
+
         customerDialogueIndex = 0;
         customerDialogueText.text = "";
 
@@ -138,6 +166,8 @@ public class TypingGame : MonoBehaviour
         customerNormalSprite = this.customer.normalSprite;
         customerAngrySprite = this.customer.normalSprite;
         customerSprite.sprite = this.customerNormalSprite;
+
+        customerName.text = customer.name;
 
         // Start Dialogue Cycle
 
@@ -151,10 +181,37 @@ public class TypingGame : MonoBehaviour
     public void EndGame()
     {
         // Have customer say one last thing. Then have them run away or fade out
-        StartCoroutine(CustomerTyping(customer.victoryStatement));
+        if (allResponsesCorrect)
+            StartCoroutine(CustomerTyping(customer.victoryStatement));
+        else
+            StartCoroutine(CustomerTyping(customer.loseStatement));
+    }
 
-        
+    bool isEnd;
 
+    IEnumerator EndGameSequence()
+    {
+
+        Debug.Log("End Game Sequence Called");
+
+        containerAnim.SetBool("isEnd", true);
+
+        yield return new WaitForSeconds(1.5f);
+
+        isEnd = true;
+
+        var overallTime = Time.time - gameStartTime;
+
+        StartCoroutine(CustomerTyping("YOU: Thank you for being a Super Foods Shoppe Customer!"));
+
+        yield return new WaitForSeconds(1.5f);
+
+
+
+        container.SetActive(false);
+        gameManager.OnTypingBattleFinished();
+        FindObjectOfType<AudioManager>().Stop("talking");
+        StopAllCoroutines();
     }
 
     int customerDialogueIndex;
@@ -163,6 +220,16 @@ public class TypingGame : MonoBehaviour
     {
 
         // TODO: if wrong give an Angry Dialogue and Sound 
+        if (result == ResponseResult.CORRECT)
+        {
+            FindObjectOfType<AudioManager>().Play("correct_typing");
+        }
+        else if (result == ResponseResult.WRONG)
+        {
+            FindObjectOfType<AudioManager>().Play("wrong_typing");
+            allResponsesCorrect = false;
+            gameManager.UpdateHealth(-1);
+        }
 
         responsePromptWindow.gameObject.SetActive(false);
 
@@ -183,13 +250,31 @@ public class TypingGame : MonoBehaviour
     }
 
 
+    IEnumerator TalkSound()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            FindObjectOfType<AudioManager>().Play("talking");
+            yield return new WaitForSeconds(.3f);
+            FindObjectOfType<AudioManager>().Stop("talking");
+        }
+    }
+
     IEnumerator CustomerTyping(string dialogue)
     {
-        Debug.Log("Customer Typing...");
+
+        StartCoroutine(TalkSound());
+
+        customerDialogueText.text = "";
         foreach (char letter in dialogue.ToCharArray())
         {
             customerDialogueText.text += letter;
             yield return new WaitForSeconds(customerDialogueSpeed);
+        }
+
+        if (isEnd)
+        {
+            yield break;
         }
 
         // Now Show The Prompt and Setup only if there is anymore response
@@ -199,14 +284,26 @@ public class TypingGame : MonoBehaviour
             responsePrompt.text = originalResponsePromptString;
             yourResponsePrompt.text = originalResponsePromptString;
 
-            responsePromptWindow.gameObject.SetActive(true);
+            if (originalResponsePromptString == "")
+            {
+                yield return new WaitForSeconds(3f);
+                NextSentence(TypingGame.ResponseResult.SKIP);
+            }
+            else
+            {
+                responsePromptWindow.gameObject.SetActive(true);
+            }
         } else
         {
-            container.SetActive(false);
-            gameManager.OnTypingBattleFinished();
+            StartCoroutine(EndGameSequence());
         }
 
 
+    }
+
+    public GameObject getContainer()
+    {
+        return container;
     }
 
 }
