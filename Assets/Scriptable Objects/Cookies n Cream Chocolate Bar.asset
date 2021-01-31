@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d2ff996b13329643975c58c843adc3a, type: 3}
-  m_Name: Soda Item
+  m_Name: Cookies n Cream Chocolate Bar
   m_EditorClassIdentifier: 
-  name: Soda
-  description: Wow. Never thought I'd see this canned!
-  uiArt: {fileID: 21300000, guid: 3a2a0f90a3bee464e8118b17f7fadbc1, type: 3}
-  foodItemType: 1
+  name: Cookies & Cream Choco Bar
+  description: 'Editors Note: Anyone who is returning this has no taste.'
+  uiArt: {fileID: 21300000, guid: 54b18146813149b42aab8438309d7111, type: 3}
+  foodItemType: 6
