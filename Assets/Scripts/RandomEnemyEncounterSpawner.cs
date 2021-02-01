@@ -9,6 +9,8 @@ public class RandomEnemyEncounterSpawner : MonoBehaviour
 
     EnemyEncounterCharacter character;
 
+    public Customer[] customers;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,7 @@ public class RandomEnemyEncounterSpawner : MonoBehaviour
             {
                 GameObject obj = Instantiate(characterToSpawn.gameObject, this.transform.position, this.transform.rotation);
                 character = obj.GetComponent<EnemyEncounterCharacter>();
+                character.customer = customers[Random.Range(0, customers.Length)];
             }
         }
         yield return new WaitForSeconds(15f);

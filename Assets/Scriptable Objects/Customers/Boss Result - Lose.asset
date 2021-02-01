@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Boss Result - Lose
   m_EditorClassIdentifier: 
   name: Your Boss
-  normalSprite: {fileID: 21300000, guid: bb1d1359dd81f75449352e95ae2e3c46, type: 3}
+  normalSprite: {fileID: 21300000, guid: 4617472fb25903d4eb06bab6e0829f0c, type: 3}
   angrySprite: {fileID: 0}
   dialogues:
   - 'You really stirred up some trouble today kid. '

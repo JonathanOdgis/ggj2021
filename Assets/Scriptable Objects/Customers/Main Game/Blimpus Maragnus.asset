@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b082625a2a7eddf4faa8065977dd6d42, type: 3}
+  m_Name: Blimpus Maragnus
+  m_EditorClassIdentifier: 
+  name: Blimpus Marangus
+  normalSprite: {fileID: 21300000, guid: 317bb05d7c790f34a945dd1bae899a43, type: 3}
+  angrySprite: {fileID: 0}
+  dialogues:
+  - Excuse me young clerk, I've acquired some sea legs and after some ambulation
+    to these prescences I am unsure whence I am?
+  - Oh yes, one of those whole sale exchanges of victuals. Can you perchance direct
+    me to where you keep your algae?
+  responses:
+  - You're in Super Food Shoppe, can I help you?
+  - You should be able to find most seafood in the freezer section.
+  mistakeStatement: 
+  victoryStatement: 'Oh most excellent, '
+  loseStatement: Hrumph, I expected such behavior from a mollusk, but up on land?
+    I'd never!

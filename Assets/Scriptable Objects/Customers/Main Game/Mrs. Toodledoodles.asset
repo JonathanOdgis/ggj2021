@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b082625a2a7eddf4faa8065977dd6d42, type: 3}
+  m_Name: Mrs. Toodledoodles
+  m_EditorClassIdentifier: 
+  name: Mrs. Toodledoodles
+  normalSprite: {fileID: 21300000, guid: 98a186f2a9c2fcb43a8def53c8f435ac, type: 3}
+  angrySprite: {fileID: 0}
+  dialogues:
+  - Oh aren't you adorable, just the sweetest thing I've seen all day.
+  - Oh you're just so cute. Well actually you can help me, I can't seem to find the
+    Taurine X energy drinks.
+  responses:
+  - Can I help you with anything ma'am?
+  - Look over near the cashiers, we have all our beverages there.
+  mistakeStatement: 
+  victoryStatement: Oh I'd pinch you cheeks if I could, thank you so much, I need
+    to pull an all nighter for Bridge tonight.
+  loseStatement: Back in my day, if someone treated me like that, well they'd be
+    all over the news and people would...

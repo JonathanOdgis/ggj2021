@@ -44,3 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterToSpawn: {fileID: 164247346459575803, guid: 6ad57bfc4373c79429aaf0a40a17c0c3, type: 3}
+  customers:
+  - {fileID: 11400000, guid: 61e6afc8bcd73a04495974af1d71a873, type: 2}
+  - {fileID: 11400000, guid: 5b753d6d28e085a4fade521925a1ef9d, type: 2}
+  - {fileID: 11400000, guid: f7d6bc61fa448f246a00c475fcf21eec, type: 2}
+  - {fileID: 11400000, guid: 5f3e5babf189737429ed498612dfec69, type: 2}
+  - {fileID: 11400000, guid: ccf815719687b2e4f82599a505356139, type: 2}
+  - {fileID: 11400000, guid: b3bf1bac6ad01f74abd61380d4af00e6, type: 2}
+  - {fileID: 11400000, guid: cf0f4bdc7cb560d4598ad5676b20b430, type: 2}
